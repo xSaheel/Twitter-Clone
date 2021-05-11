@@ -1,14 +1,17 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { addUser } from "../actions/dataActions";
 
 const SignIn = () => {
+
+    const userData = useSelector(state => state.userReducer.userData);
 
     const dispatch = useDispatch();
     const [email, setEmail] = useState('');
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
+    const [loginId, setLoginId] = useState('');
+    const [loginPass, setLoginPass] = useState('');
 
     const signUp = (e) => {
         e.preventDefault();
@@ -20,12 +23,28 @@ const SignIn = () => {
             name: name,
             email: email,
             password: password,
-            popularity: 0
         };
         setName('');
         setEmail('');
         setPassword('');
         dispatch(addUser(newUser));
+    }
+
+    const authenticate = (user) => {
+        return (user.email === loginId && user.password === loginPass);
+    }
+
+    const login = (e) => {
+        e.preventDefault();
+        if(loginId === '' || loginPass === ''){
+            alert('Please enter all details!');
+            return;
+        }
+        if(userData.find(authenticate) === undefined){
+            alert('Invalid Username or Password');
+            return;
+        }
+        console.log('authenticated');
     }
 
     return (
@@ -34,9 +53,9 @@ const SignIn = () => {
                 <h1>Sign In 😉</h1>
                 <p style={{backgroundColor : '#393e46'}}>EXISTING USER</p>
                 <form className="login-form">
-                    <input type="text" placeholder="Email" id="login-email" name="login-email"></input>
-                    <input type="password" placeholder="Password" id="login-pw" name="login-pw"></input>
-                    <button className="login-btn">Sign In</button>
+                    <input type="text" placeholder="Email" id="login-email" name="login-email" onChange={(e) => setLoginId(e.target.value)}></input>
+                    <input type="password" placeholder="Password" id="login-pw" name="login-pw" onChange={(e) => setLoginPass(e.target.value)}></input>
+                    <button className="login-btn" onClick={(e) => login(e)}>Sign In</button>
                 </form>
             </div>
             <div className="sign-up-container">
