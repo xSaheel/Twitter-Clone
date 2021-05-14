@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { addLike } from "../actions/dataActions";
 import avatar from "../images/male-avatar.png";
@@ -10,7 +9,7 @@ const Post = ({ post }) => {
     return(
         <div className="post-body">
             <div className="user-header">
-                <img className="avatar" src={avatar}></img>
+                <img className="avatar" src={avatar} alt="user-img"></img>
                 <h2 className="author">{post.author}</h2>
             </div>
             <p className="text">{post.text}</p>
@@ -18,7 +17,7 @@ const Post = ({ post }) => {
                 <p className="date">{post.date}</p>
                 <div className="likes">
                     <p>{post.likes}</p>
-                    <i className="fa fa-heart-o fa-lg" aria-hidden="true" onClick={() => dispatch(addLike(post))}></i>
+                    <i className="fa fa-heart-o fa-lg" aria-hidden="true" onClick={() => addLike(dispatch, post)}></i>
                 </div>
             </div>
         </div>

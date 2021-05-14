@@ -10,17 +10,23 @@ const tweetSchema = new mongoose.Schema({
         required: true,
         default: 'Anonymous'
     },
+    email: {
+        type: String,
+        default: ''
+    },
     text: {
         type: String,
         required: true
     },
     likes: {
         type: Number,
+        required: true,
         default: 0
     },
     date: {
-        type: Date,
-        default: Date.now
+        type: String,
+        required: true,
+        default: Date.toLocaleString()
     }
 })
 

@@ -1,20 +1,51 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addUser } from "../actions/dataActions";
+import { addUser, getUsers, setCurrentUser } from "../actions/userActions";
+import { useHistory } from 'react-router-dom';
 
 const SignIn = () => {
 
     const userData = useSelector(state => state.userReducer.userData);
 
     const dispatch = useDispatch();
-    const [email, setEmail] = useState('');
-    const [name, setName] = useState('');
-    const [password, setPassword] = useState('');
-    const [loginId, setLoginId] = useState('');
-    const [loginPass, setLoginPass] = useState('');
 
-    const signUp = (e) => {
+    const history = useHistory();
+    
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
+    const [isLoginPage, setIsLoginPage] = useState(true);
+
+    useEffect(() => {
+        getUsers(dispatch);
+    },[])
+
+    const authenticate = (user) => {
+        return (user.email === email && user.password === password);
+    }
+
+    const loginHandler = (e) => {
         e.preventDefault();
+        
+        if(email === '' || password === ''){
+            alert('Please enter all details!');
+            return;
+        }
+        const userInfo = userData.find(authenticate);
+        if(userInfo === undefined){
+            alert('Invalid Username or Password');
+            return;
+        }
+        console.log('authenticated');
+        dispatch(setCurrentUser(userInfo));
+        history.push("/");
+        setEmail('');
+        setPassword('');
+    }
+
+    const signupHandler = (e) => {
+        e.preventDefault();
+
         if(email === '' || name === '' || password === ''){
             alert('Please enter all details!');
             return;
@@ -24,50 +55,38 @@ const SignIn = () => {
             email: email,
             password: password,
         };
-        setName('');
+
+        addUser(dispatch, newUser);
+        console.log('user added');
         setEmail('');
         setPassword('');
-        dispatch(addUser(newUser));
-    }
-
-    const authenticate = (user) => {
-        return (user.email === loginId && user.password === loginPass);
-    }
-
-    const login = (e) => {
-        e.preventDefault();
-        if(loginId === '' || loginPass === ''){
-            alert('Please enter all details!');
-            return;
-        }
-        if(userData.find(authenticate) === undefined){
-            alert('Invalid Username or Password');
-            return;
-        }
-        console.log('authenticated');
+        setName('');
+        setIsLoginPage(true);
     }
 
     return (
-        <div>
-            <div className="login-container">
-                <h1>Sign In 😉</h1>
-                <p style={{backgroundColor : '#393e46'}}>EXISTING USER</p>
-                <form className="login-form">
-                    <input type="text" placeholder="Email" id="login-email" name="login-email" onChange={(e) => setLoginId(e.target.value)}></input>
-                    <input type="password" placeholder="Password" id="login-pw" name="login-pw" onChange={(e) => setLoginPass(e.target.value)}></input>
-                    <button className="login-btn" onClick={(e) => login(e)}>Sign In</button>
+        <div className="login-container">
+            {isLoginPage ? <div>
+                <h1 className="login-text">Login</h1>
+                <form onSubmit={loginHandler}>
+                    <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <button type="submit" className="login-btn">Login</button>
                 </form>
-            </div>
-            <div className="sign-up-container">
-                <h1>Sign Up 😎</h1>
-                <p style={{backgroundColor : '#393e46'}}>NEW USER</p>
-                <form className="login-form">
-                    <input type="text" placeholder="Name" id="name" name="name" onChange={(e) => setName(e.target.value)}></input>
-                    <input type="text" placeholder="Email" id="signup-email" name="signup-email" onChange={(e) => setEmail(e.target.value)}></input>
-                    <input type="password" placeholder="Password" id="signup-pw" name="signup-pw" onChange={(e) => setPassword(e.target.value)}></input>
-                    <button className="login-btn" onClick={(e) => signUp(e)}>Sign Up</button>
+                <p style={{marginTop: '0.5rem'}}>OR</p>
+                <p className="toggle" onClick={() => setIsLoginPage(false)}>Create a New Account</p>
+            </div> : 
+            <div>
+                <h1 className="login-text">Sign up</h1>
+                <form onSubmit={signupHandler}>
+                    <input type="text" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)}/>
+                    <input type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+                    <input type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+                    <button type="submit" className="login-btn">Sign up</button>
                 </form>
-            </div>
+                <p style={{marginTop: '0.5rem'}}>OR</p>
+                <p className="toggle" onClick={() => setIsLoginPage(true)}>Login here</p>
+            </div>}
         </div>
     );
 }

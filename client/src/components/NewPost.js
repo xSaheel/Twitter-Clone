@@ -1,23 +1,30 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { addData } from '../actions/dataActions';
 
 const NewPost = () => {
     const dispatch = useDispatch();
+
+    const currentUser = useSelector(state => state.currentUserReducer.userData);
     
     const [text, setText] = useState('');
 
     const addPost = (e) => {
         e.preventDefault();
+        
         const newTweet = {
             id: Math.floor(Math.random()*100000000),
-            author: 'Anonymous',
+            author: currentUser.name,
+            email: currentUser.email,
             text: text,
             likes: 0,
             date: new Date().toDateString()
         };
+
+        console.log(newTweet);
+
+        addData(dispatch, newTweet);
         setText('');
-        dispatch(addData(newTweet));
     }
 
     return(

@@ -4,12 +4,9 @@ import Feed from "./Feed";
 
 const Home = () => {
     return (
-        <div>
-            <Navbar/>
-            <div className="container">
-                <NewPost/>
-                <Feed/>
-            </div>
+        <div className="container">
+            <NewPost/>
+            <Feed/>
         </div>
     );
 }

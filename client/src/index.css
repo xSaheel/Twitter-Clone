@@ -4,13 +4,16 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  background-color: #232931;
-  color: #eeeeee;
   font-family: "Poppins", sans-serif;
 }
 
 *:focus {
   outline: none;
+}
+
+body {
+  background-color: #232931;
+  color: #eeeeee;
 }
 
 .nav {
@@ -20,9 +23,10 @@
 
 .app-name {
   margin: 1.6rem;
+  cursor: pointer;
 }
 
-.app-name:hover {
+.app-name > i:hover {
   color: #1da1f2;
 }
 
@@ -53,6 +57,7 @@ li {
   background-color: transparent;
   margin: 1.5rem;
   cursor: pointer;
+  color: #eeeeee;
 }
 
 .sign-in:hover {
@@ -81,6 +86,7 @@ textarea {
   border-radius: 1rem;
   background-color: #8395a59f;
   resize: none;
+  color: #eeeeee;
 }
 
 textarea::placeholder {
@@ -183,56 +189,59 @@ i {
 }
 
 .login-container {
-  width: 50%;
-  float: left;
-  height: 100vh;
-  border-right: 1px solid #393e46;
-}
-
-.sign-up-container {
-  width: 50%;
-  float: right;
-  height: 100vh;
-}
-
-.login-container > h1,
-.sign-up-container > h1 {
+  width: 400px;
+  height: 75vh;
+  margin: 6rem auto 3rem auto;
+  background-color: #8395a59f;
+  border-radius: 0.5rem;
   text-align: center;
-  margin-top: 8rem;
 }
 
-.login-container > p {
-  text-align: center;
-  margin-top: 2rem;
+.login-text {
+  padding-top: 4rem;
 }
 
-.sign-up-container > p {
-  text-align: center;
-  margin-top: 2rem;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  width: 50%;
-  margin: auto;
-  margin-top: 2rem;
+.toggle {
+  margin-top: 0.3rem;
+  cursor: pointer;
+  font-weight: 500;
 }
 
 input {
-  margin-top: 1rem;
-  padding: 0.8rem;
-  background-color: #eeeeee;
-  color: #393e46;
+  padding: 1rem;
+  width: 80%;
+  margin: 0.5rem auto 0.5rem auto;
   font-size: medium;
   border: none;
+  border-radius: 0.5rem;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
 }
 
 .login-btn {
-  margin-top: 1rem;
-  padding: 0.8rem;
+  margin: 0.5rem auto 0 auto;
+  width: 80%;
+  height: 4rem;
   background-color: #1da1f2;
-  font-size: large;
-  cursor: pointer;
   border: none;
+  color: #eeeeee;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.user-info {
+  margin: 2rem auto 2rem auto;
+  padding: 2rem;
+  background-color: #232931;
+  width: 80%;
+  border-radius: 0.5rem;
+}
+
+.user-info > p {
+  padding: 0.3rem;
 }

@@ -4,16 +4,25 @@ export const initialState = {
 
 const dataReducer = (state = initialState, action) => {
     switch(action.type){
+        case 'GET_DATA': 
+            return {
+                ...state,
+                data: action.payload
+            }
         case 'ADD_DATA':
             return {
                 ...state,
                 data: [action.payload, ...state.data]
             }
         case 'ADD_LIKE':
-            action.payload.likes = action.payload.likes + 1;
             return {
                 ...state,
-                data: [...state.data]
+                data: action.payload
+            }
+        case 'DATA_ERROR':
+            return {
+                ...state,
+                data: action.payload
             }
         default:
             return state;
