@@ -1,5 +1,5 @@
 # Twitter-Clone
-MERN Stack Twiiter Clone.
+A Full Stack Twitter Clone web app based on MERN Stack.
 
 ## Frontend Tech
 1. ReactJS
