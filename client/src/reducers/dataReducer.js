@@ -17,7 +17,7 @@ const dataReducer = (state = initialState, action) => {
         case 'ADD_LIKE':
             return {
                 ...state,
-                data: action.payload
+                data: state.data
             }
         case 'DATA_ERROR':
             return {

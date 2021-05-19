@@ -12,7 +12,7 @@ const Navbar = () => {
     const [btnText, setBtnText] = useState('Sign in');
 
     useEffect(() => {
-        {!currentUser || currentUser.email === '' ? setBtnText('Sign in') : setBtnText('Sign out')}
+        {currentUser.email === '' ? setBtnText('Sign in') : setBtnText('Sign out')}
     },[currentUser])
 
     const logout = () => {
@@ -27,12 +27,13 @@ const Navbar = () => {
 
     return(
         <div className="nav">
-            <h2 className="app-name" onClick={redirectHome}>Twitter 
-                <i className="fa fa-twitter fa-lg" aria-hidden="true"></i>
-            </h2>
+            <div className="app-name">
+                <h2 onClick={redirectHome}>Twitter </h2>
+                <i className="fa fa-twitter fa-2x" aria-hidden="true"></i>
+            </div>
             <ul className="nav-items">
                 <li><Link to="/myprofile">My Profile</Link></li>
-                <li><Link to="/">My Followers</Link></li>
+                <li><Link to="/topposts">Top Posts</Link></li>
                 <li><Link to="/myposts">My Posts</Link></li>
             </ul>
             {btnText === 'Sign out' ? <button className="sign-in" onClick={logout}>Sign out</button> : 

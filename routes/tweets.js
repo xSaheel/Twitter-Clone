@@ -12,7 +12,7 @@ router.route('/add').post((req,res) => {
     const author = req.body.author;
     const email = req.body.email;
     const text = req.body.text;
-    const likes = Number(req.body.likes);
+    const likes = req.body.likes;
     const date = req.body.date;
 
     const newTweet = new Tweet({
@@ -31,14 +31,18 @@ router.route('/add').post((req,res) => {
 
 // ADD LIKE
 
-router.route('/addlike/:id').post((req,res) => {
+router.route('/like/:postId/:userId').put((req,res) => {
 
-    Tweet.findById(req.params.id)
-        .then(tweet => { tweet.likes = tweet.likes + 1 })
+    Tweet.findByIdAndUpdate(req.params.postId, {
+        $push: {likes: req.params.userId}
+    }, (err, data) => {
+        if(err){
+            console.log(err);
+        }else {
+            res.json(data);
+        }
+    })
 
-    Tweet.save()
-        .then(() => res.json('Post Liked!'))
-        .catch(err => res.status(400).json(err));
 })
 
 module.exports = router;

@@ -17,7 +17,7 @@ const NewPost = () => {
             author: currentUser.name,
             email: currentUser.email,
             text: text,
-            likes: 0,
+            likes: [],
             date: new Date().toDateString()
         };
 

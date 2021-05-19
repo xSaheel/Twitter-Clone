@@ -2,6 +2,7 @@ import Post from "./Post";
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import { getData } from "../actions/dataActions";
+import { getUsers } from "../actions/userActions";
 
 const Feed = () => {
 
@@ -11,8 +12,9 @@ const Feed = () => {
 
     useEffect(() => {
        getData(dispatch);
+       getUsers(dispatch);
        setIsLoading(false);
-    },[])
+    },[dispatch])
 
     const tweets = useSelector(state => state.dataReducer.data);
 

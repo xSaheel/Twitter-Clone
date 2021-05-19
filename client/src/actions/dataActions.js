@@ -1,4 +1,4 @@
-// DATA / POSTS / TWEETS ACTIONS
+// DATA ACTIONS
 
 // GET A POST
 
@@ -7,7 +7,6 @@ export const getData = (dispatch) => {
     fetch('/tweets')
     .then(res => res.json())
     .then(data => {
-        console.log(data)
         dispatch({
             type: 'GET_DATA',
             payload: data
@@ -51,17 +50,16 @@ export const addData = (dispatch, data) => {
 
 // ADD LIKE TO A POST
 
-export const addLike = (dispatch, data) => {
+export const addLike = (dispatch, postId, userId, data) => {
 
-    fetch(`/tweets/addlike/${data._id}`,{
-        method: 'POST',
+    fetch(`/tweets/like/${postId}/${userId}`,{
+        method: 'PUT',
         body: JSON.stringify(data),
         headers: {
             'Content-Type': 'application/json',
         }
     })
-    .then(res => res.json())
-    .then(data => {
+    .then(() => {
         dispatch({
             type: 'ADD_LIKE',
             payload: data
@@ -76,4 +74,3 @@ export const addLike = (dispatch, data) => {
     })
 
 }
-

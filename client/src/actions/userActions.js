@@ -53,6 +53,6 @@ export const setCurrentUser = (user) => {
 
 export const resetCurrentUser = () => {
     return {
-        type: 'SET_CURRENT_USER',
+        type: 'RESET_CURRENT_USER',
     }
 }

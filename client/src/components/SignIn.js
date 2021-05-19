@@ -18,7 +18,7 @@ const SignIn = () => {
 
     useEffect(() => {
         getUsers(dispatch);
-    },[])
+    },[dispatch])
 
     const authenticate = (user) => {
         return (user.email === email && user.password === password);
@@ -50,6 +50,12 @@ const SignIn = () => {
             alert('Please enter all details!');
             return;
         }
+
+        if(userData.find(user => user.email === email) !== undefined){
+            alert('This email is already registered');
+            return;
+        }
+
         const newUser = {
             name: name,
             email: email,
@@ -74,7 +80,7 @@ const SignIn = () => {
                     <button type="submit" className="login-btn">Login</button>
                 </form>
                 <p style={{marginTop: '0.5rem'}}>OR</p>
-                <p className="toggle" onClick={() => setIsLoginPage(false)}>Create a New Account</p>
+                <p className="toggle" onClick={() => setIsLoginPage(false)}>Create a <span style={{color: '#1da1f2'}}>New Account</span></p>
             </div> : 
             <div>
                 <h1 className="login-text">Sign up</h1>

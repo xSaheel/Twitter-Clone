@@ -1,4 +1,3 @@
-import Navbar from "./Navbar"
 import NewPost from "./NewPost";
 import Feed from "./Feed";
 
